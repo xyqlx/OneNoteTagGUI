@@ -1,0 +1,37 @@
+﻿<Window x:Class="OneNoteTagGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OneNoteTagGUI"
+        mc:Ignorable="d"
+        Title="介质标签管理器" Height="520" Width="800" IsEnabled="False">
+    <Grid>
+        <StackPanel Name="MainStack" Orientation="Vertical">
+            <TextBox IsReadOnly="True" Margin="10" x:Name="pageName" FontSize="20" Text="{Binding Path=Name,Mode=OneWay}"></TextBox>
+            <ScrollViewer Name="ScrollViewerContent" Margin="10,5,0,0" VerticalScrollBarVisibility="Auto" Height="260">
+                <TextBlock FontSize="16" Text="{Binding Path=Content,Mode=OneWay}" TextWrapping="Wrap"/>
+            </ScrollViewer>
+            <ListBox Name="ListBoxTags" Margin="20 10 20 10" BorderThickness="0" ItemsSource="{Binding Path=Tags,Mode=OneWay}" MouseDoubleClick="ListBox_MouseDoubleClick" MinHeight="30">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <TextBox Name="TextBoxTags" Margin="20 0 10 10" PreviewKeyDown="TextBox_KeyDown" FontSize="20"/>
+            <ListBox Name="ListBoxCommonTags" Margin="20 1 20 10" BorderThickness="0" ItemsSource="{Binding Path=CommonTags,Mode=OneWay}" MouseDoubleClick="ListBoxCommon_MouseDoubleClick" MinHeight="30" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                <Button Margin="5" Click="Btn_Previous">上一条</Button>
+                <Button Margin="5" Click="Btn_Next">下一条</Button>
+                <TextBox Margin="5" MinWidth="40" Name="TextBoxPage" Text="{Binding Path=PageIndex,Mode=TwoWay,UpdateSourceTrigger=Explicit}" PreviewKeyDown="TextBoxPage_PreviewKeyDown"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
