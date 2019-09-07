@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OneNoteTagGUI"
         mc:Ignorable="d"
-        Title="介质标签管理器" Height="520" Width="800" IsEnabled="False">
+        Title="介质标签管理器" Height="520" Width="800" IsEnabled="False" Loaded="Window_Loaded">
     <Grid>
         <StackPanel Name="MainStack" Orientation="Vertical">
             <TextBox IsReadOnly="True" Margin="10" x:Name="pageName" FontSize="20" Text="{Binding Path=Name,Mode=OneWay}"></TextBox>

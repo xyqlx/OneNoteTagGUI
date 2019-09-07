@@ -16,7 +16,6 @@ namespace OneNoteTagGUI
         {
             this.SizeChanged += MainWindow_SizeChanged;
             InitializeComponent();
-            InitData();
         }
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -26,7 +25,7 @@ namespace OneNoteTagGUI
 
         private void InitData()
         {
-            pageBrowser = new PageBrowser(Xyqlx.OneNote.App.Notebooks.First(x => x.Name == "介质").Sections.First(x => x.Name == "页面"));
+            pageBrowser = new PageBrowser(Xyqlx.OneNote.App.Notebooks.First(x => x.Name == "介质").Sections.First(x => x.Name == "新页面"));
             this.MainStack.DataContext = pageBrowser;
             this.IsEnabled = true;
             this.TextBoxTags.Focus();
@@ -98,6 +97,11 @@ namespace OneNoteTagGUI
             {
                 TextBox_KeyDown(sender, e);
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitData();
         }
     }
 }
