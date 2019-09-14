@@ -134,9 +134,6 @@ namespace OneNoteTagGUI
                 .Project(Builders<BsonDocument>.Projection.Include("time").Exclude("_id"));
             var cursor = query.ToCursor();
             var times = new HashSet<DateTime>(from doc in cursor.ToEnumerable() select DateTime.Parse(doc["time"].ToString()));
-            //测试
-            var time = times.Max();
-            var pages = section.PageInfos.Where(x => x.DateTime.Date == time.Date);
             //根据时间确定是否是所需页面
             pageInfos = (from page in section.PageInfos where times.Any(x=> x == page.DateTime.ToLocalTime()) select page).ToArray();
             if (pageInfos.Length != 0)
