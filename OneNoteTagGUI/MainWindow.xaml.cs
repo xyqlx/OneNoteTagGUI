@@ -103,5 +103,13 @@ namespace OneNoteTagGUI
         {
             InitData();
         }
+
+        private void TextBoxFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                pageBrowser.UpdateFilters(TextBoxFilter.Text);
+            }
+        }
     }
 }

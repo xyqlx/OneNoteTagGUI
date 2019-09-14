@@ -22,13 +22,15 @@ namespace OneNoteTagGUI
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        //选中无页面的节会出异常（
         public PageBrowser(one.Section section)
         {
             this.section = section;
             pageInfos = section.PageInfos.ToArray();
-            current = new one.TagPage(one.App.GetPage(pageInfos[0].ID));
-            tags = new ObservableCollection<string>(current.tags);
+            if(pageInfos.Length != 0)
+            {
+                current = new one.TagPage(one.App.GetPage(pageInfos[0].ID));
+                tags = new ObservableCollection<string>(current.tags);
+            }
             commonTags = new List<string>();
         }
 
@@ -86,6 +88,7 @@ namespace OneNoteTagGUI
 
         public void AddTags(IEnumerable<string> other)
         {
+            if (current == null) return;
             current.tags.UnionWith(other.Where(x => x != ""));
             current.Update();
             tags.Clear();
@@ -95,6 +98,7 @@ namespace OneNoteTagGUI
         }
         public void RemoveTag(string other)
         {
+            if (current == null) return;
             current.tags.Remove(other);
             current.Update();
             tags.Clear();
@@ -116,9 +120,40 @@ namespace OneNoteTagGUI
             var collection = database.GetCollection<BsonDocument>("medium");
             collection.UpdateOne(Builders<BsonDocument>.Filter.Eq("time", dateTime), new BsonDocument { { "$set", updateBson } }, new UpdateOptions { IsUpsert = true });
         }
+        public void UpdateFilters(string filterText)
+        {
+            //转换格式
+            string[] filterTags = filterText.Split(' ', ';');
+            //连接数据库
+            var client = new MongoClient("mongodb://127.0.0.1:27017");
+            var database = client.GetDatabase("xyals");
+            var collection = database.GetCollection<BsonDocument>("medium");
+            //查询标签数组包含所有指定标签的页面时间
+            var query = collection
+                .Find(Builders<BsonDocument>.Filter.All<String>("tags",filterTags))
+                .Project(Builders<BsonDocument>.Projection.Include("time").Exclude("_id"));
+            var cursor = query.ToCursor();
+            var times = new HashSet<DateTime>(from doc in cursor.ToEnumerable() select DateTime.Parse(doc["time"].ToString()));
+            //测试
+            var time = times.Max();
+            var pages = section.PageInfos.Where(x => x.DateTime.Date == time.Date);
+            //根据时间确定是否是所需页面
+            pageInfos = (from page in section.PageInfos where times.Any(x=> x == page.DateTime.ToLocalTime()) select page).ToArray();
+            if (pageInfos.Length != 0)
+            {
+                current = new one.TagPage(one.App.GetPage(pageInfos[0].ID));
+                tags = new ObservableCollection<string>(current.tags);
+            }
+            else {
+                current = null;
+                tags = null;
+            }
+            index = 0;
+            OnPropertyChanged();
+        }
 
-        public string Name => current.Name;
-        public string Content => current.PlainText;
+        public string Name => current?.Name;
+        public string Content => current?.PlainText;
         public ObservableCollection<string> Tags => tags;
         public int PageIndex { get => index + 1; set { index = value - 1;MoveToIndex(); } }
 

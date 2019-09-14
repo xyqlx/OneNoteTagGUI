@@ -19,7 +19,7 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-            <TextBox Name="TextBoxTags" Margin="20 0 10 10" PreviewKeyDown="TextBox_KeyDown" FontSize="20"/>
+            <TextBox Name="TextBoxTags" Margin="20 0 10 10" PreviewKeyDown="TextBox_KeyDown" FontSize="20" ToolTip="在这里输入添加的标签"/>
             <ListBox Name="ListBoxCommonTags" Margin="20 1 20 10" BorderThickness="0" ItemsSource="{Binding Path=CommonTags,Mode=OneWay}" MouseDoubleClick="ListBoxCommon_MouseDoubleClick" MinHeight="30" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -30,7 +30,8 @@
             <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
                 <Button Margin="5" Click="Btn_Previous">上一条</Button>
                 <Button Margin="5" Click="Btn_Next">下一条</Button>
-                <TextBox Margin="5" MinWidth="40" Name="TextBoxPage" Text="{Binding Path=PageIndex,Mode=TwoWay,UpdateSourceTrigger=Explicit}" PreviewKeyDown="TextBoxPage_PreviewKeyDown"/>
+                <TextBox Margin="5" MinWidth="40" Name="TextBoxPage" Text="{Binding Path=PageIndex,Mode=TwoWay,UpdateSourceTrigger=Explicit}" PreviewKeyDown="TextBoxPage_PreviewKeyDown" ToolTip="页码"/>
+                <TextBox Margin="5" MinWidth="200" Name="TextBoxFilter" ToolTip="在这里输入筛选标签" KeyDown="TextBoxFilter_KeyDown"/>
             </StackPanel>
         </StackPanel>
     </Grid>
