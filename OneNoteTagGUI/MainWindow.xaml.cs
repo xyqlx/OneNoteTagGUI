@@ -94,8 +94,7 @@ namespace OneNoteTagGUI
         {
             if(e.Key == Key.Enter)
             {
-                TextBox textBox = (TextBox)sender;
-                textBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                TextBoxPage.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             }
             else
             {
@@ -114,6 +113,11 @@ namespace OneNoteTagGUI
             {
                 pageBrowser.UpdateFilters(TextBoxFilter.Text);
             }
+        }
+
+        private void TextBoxFilter_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            TextBoxPage_PreviewKeyDown(sender, e);
         }
     }
 }

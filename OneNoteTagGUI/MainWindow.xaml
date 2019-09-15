@@ -32,7 +32,7 @@
                 <Button Margin="5" Click="Btn_Next">下一条</Button>
                 <Button Margin="5" Content="打开" Click="Btn_Open"/>
                 <TextBox Margin="5" MinWidth="40" Name="TextBoxPage" Text="{Binding Path=PageIndex,Mode=TwoWay,UpdateSourceTrigger=Explicit}" PreviewKeyDown="TextBoxPage_PreviewKeyDown" ToolTip="页码"/>
-                <TextBox Margin="5" MinWidth="200" Name="TextBoxFilter" ToolTip="在这里输入筛选标签" KeyDown="TextBoxFilter_KeyDown"/>
+                <TextBox Margin="5" MinWidth="200" Name="TextBoxFilter" ToolTip="在这里输入筛选标签" KeyDown="TextBoxFilter_KeyDown" PreviewKeyDown="TextBoxFilter_PreviewKeyDown"/>
             </StackPanel>
         </StackPanel>
     </Grid>
