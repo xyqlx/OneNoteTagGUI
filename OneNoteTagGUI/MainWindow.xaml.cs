@@ -32,6 +32,10 @@ namespace OneNoteTagGUI
             Task.Run(() => pageBrowser.ClacCommonTags());
         }
 
+        private void Btn_Open(object sender, RoutedEventArgs e)
+        {
+            pageBrowser.Open();
+        }
         private void Btn_Next(object sender, RoutedEventArgs e)
         {
             pageBrowser.MoveToNext();

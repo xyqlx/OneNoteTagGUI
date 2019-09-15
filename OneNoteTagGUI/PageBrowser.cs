@@ -48,7 +48,7 @@ namespace OneNoteTagGUI
                         tagCnt[tag.ToString()] = tagCnt.ContainsKey(tag.ToString()) ? tagCnt[tag.ToString()] + 1 : 0;
             commonTags = tagCnt.Keys.OrderByDescending(x => tagCnt[x]).Take(20).ToList();
         }
-
+        public void Open() => current?.Open();
         public void MoveToPrevious()
         {
             if (index != 0)
