@@ -25,7 +25,10 @@ namespace OneNoteTagGUI
 
         private void InitData()
         {
-            pageBrowser = new PageBrowser(Xyqlx.OneNote.App.Notebooks.First(x => x.Name == "介质").Sections.First(x => x.Name == "新页面"));
+            pageBrowser = new PageBrowser(
+                //Xyqlx.OneNote.App.Notebooks.First(x => x.Name == "介质").Sections.First(x => x.Name == "新页面")
+                Xyqlx.OneNote.App.Notebooks.FirstOrDefault()?.Sections?.FirstOrDefault(x=>x.Name == "介质")
+            );
             this.MainStack.DataContext = pageBrowser;
             this.IsEnabled = true;
             this.TextBoxTags.Focus();
